@@ -21,19 +21,28 @@ trait SampleRoute extends Directives with SprayJsonSupport with DefaultJsonProto
 
   val service = new SampleService
 
-  private val createMessageRoute = pathPrefix(pathSegment / "to" / messagesPathSegment) {
-    pathEndOrSingleSlash {
-      post {
-        entity(as[Message]) { message =>
-          onSuccess(service.createMessage(message)) { response =>
-            complete(StatusCodes.Created, response)
-          }
-        }
-      }
-    }
-  }
+//  private val createMessageRoute = pathPrefix(pathSegment / "to" / messagesPathSegment) {
+//    pathEndOrSingleSlash {
+//      post {
+//        entity(as[Message]) { message =>
+//          onSuccess(service.createMessage(message)) { response =>
+//            complete(StatusCodes.Created, response)
+//          }
+//        }
+//      }
+//    }
+//  }
 
   private val updateMessageRoute = pathPrefix("path" / toPathSegment / PathMatchers.JavaUUID / messagesPathSegment / PathMatchers.LongNumber) { case (uuid, id) =>
+//    path("theman") {
+//      put {
+//        entity(as[Message]) { update =>
+//          onSuccess(service.updateMessage(id, update)) { response =>
+//            complete(StatusCodes.OK, response)
+//          }
+//        }
+//      }
+//    } ~
     pathEndOrSingleSlash {
       put {
         entity(as[Message]) { update =>
@@ -45,42 +54,42 @@ trait SampleRoute extends Directives with SprayJsonSupport with DefaultJsonProto
     }
   }
 
-  private val getMessagesRoute = pathPrefix(pathSegment / toPathSegment / "messages") {
-    pathEndOrSingleSlash {
-      get {
-        parameters('ids.as(CsvSeq[Long]).?, 'type.as[String].?, 'isPositive.as[Boolean].?) { (_, _, _) =>
-          onSuccess(service.getMessages) { response =>
-            complete(StatusCodes.OK, response)
-          }
-        }
-      }
-    }
-  }
-
-  private val getMessageRoute = pathPrefix("path" / toPathSegment / messagesPathSegment / PathMatchers.LongNumber) { id =>
-    pathEndOrSingleSlash {
-      get {
-        onSuccess(service.getMessage(id)) {
-          case Some(message) => complete(StatusCodes.OK, message)
-          case None => complete(StatusCodes.NotFound, "Message not found")
-        }
-      }
-    }
-  }
-
-  private val deleteMessageRoute = pathPrefix(pathSegment / "to" / messagesPathSegment / PathMatchers.LongNumber) { id =>
-    pathEndOrSingleSlash {
-      delete {
-        onSuccess(service.deleteMessage(id)) { response =>
-          complete(StatusCodes.OK)
-        }
-      }
-    }
-  }
-
-  val sampleRoute: Route = createMessageRoute ~
-    updateMessageRoute ~
-    getMessagesRoute ~
-    getMessageRoute ~
-    deleteMessageRoute
+//  private val getMessagesRoute = pathPrefix(pathSegment / toPathSegment / "messages") {
+//    pathEndOrSingleSlash {
+//      get {
+//        parameters('ids.as(CsvSeq[Long]).?, 'type.as[String].?, 'isPositive.as[Boolean].?) { (_, _, _) =>
+//          onSuccess(service.getMessages) { response =>
+//            complete(StatusCodes.OK, response)
+//          }
+//        }
+//      }
+//    }
+//  }
+//
+//  private val getMessageRoute = pathPrefix("path" / toPathSegment / messagesPathSegment / PathMatchers.LongNumber) { id =>
+//    pathEndOrSingleSlash {
+//      get {
+//        onSuccess(service.getMessage(id)) {
+//          case Some(message) => complete(StatusCodes.OK, message)
+//          case None => complete(StatusCodes.NotFound, "Message not found")
+//        }
+//      }
+//    }
+//  }
+//
+//  private val deleteMessageRoute = pathPrefix(pathSegment / "to" / messagesPathSegment / PathMatchers.LongNumber) { id =>
+//    pathEndOrSingleSlash {
+//      delete {
+//        onSuccess(service.deleteMessage(id)) { response =>
+//          complete(StatusCodes.OK)
+//        }
+//      }
+//    }
+//  }
+//
+//  val sampleRoute: Route = createMessageRoute ~
+//    updateMessageRoute ~
+//    getMessagesRoute ~
+//    getMessageRoute ~
+//    deleteMessageRoute
 }
