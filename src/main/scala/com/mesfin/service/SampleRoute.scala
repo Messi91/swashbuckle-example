@@ -34,21 +34,17 @@ trait SampleRoute extends Directives with SprayJsonSupport with DefaultJsonProto
 //  }
 
   private val updateMessageRoute = pathPrefix("path" / toPathSegment / PathMatchers.JavaUUID / messagesPathSegment / PathMatchers.LongNumber) { case (uuid, id) =>
-//    path("theman") {
-//      put {
-//        entity(as[Message]) { update =>
-//          onSuccess(service.updateMessage(id, update)) { response =>
-//            complete(StatusCodes.OK, response)
-//          }
-//        }
-//      }
-//    } ~
+    path("theman") {
+      put {
+        entity(as[Message]) { update =>
+          ???
+        }
+      }
+    } ~
     pathEndOrSingleSlash {
       put {
         entity(as[Message]) { update =>
-          onSuccess(service.updateMessage(id, update)) { response =>
-            complete(StatusCodes.OK, response)
-          }
+          ???
         }
       }
     }
@@ -57,7 +53,7 @@ trait SampleRoute extends Directives with SprayJsonSupport with DefaultJsonProto
 //  private val getMessagesRoute = pathPrefix(pathSegment / toPathSegment / "messages") {
 //    pathEndOrSingleSlash {
 //      get {
-//        parameters('ids.as(CsvSeq[Long]).?, 'type.as[String].?, 'isPositive.as[Boolean].?) { (_, _, _) =>
+//        parameters('ids.as(CsvSeq[Long]).?, 'type.as[String].?, 'isPositive.as[Boolean]) { (_, _, _) =>
 //          onSuccess(service.getMessages) { response =>
 //            complete(StatusCodes.OK, response)
 //          }
